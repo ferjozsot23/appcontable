@@ -13,16 +13,27 @@ import javax.persistence.criteria.Root;
 
 import modelo.dao.GenericDAO;
 
+/**Clase generica para manejar la persistencia de los datos de la entidades
+ * @author Cristian
+ * @param <T>
+ * @param <ID>
+ */
 public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 
 	private Class<T> persistentClass;
 	protected EntityManager em;
 
+	/**Constructor de los parámetros 
+	 * @param persistentClass, clases persistentes
+	 */
 	public JPAGenericDAO(Class<T> persistentClass) {
 		this.persistentClass = persistentClass;
 		this.em = Persistence.createEntityManagerFactory("examenweb").createEntityManager();
 	}
-
+	
+	/**
+	 *Método para crear una entidad en la base de datos
+	 */
 	public void create(T entity) {
 		em.getTransaction().begin();
 		try {
@@ -35,10 +46,16 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 		}
 	}
 
+	/**
+	 *Método para obtener el objeto por ID
+	 */
 	public T getById(ID id) {
 		return em.find(persistentClass, id);
 	}
 
+	/**
+	 *Método para actualizar un registro
+	 */
 	public void update(T entity) {
 		em.getTransaction().begin();
 		try {
@@ -52,6 +69,9 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 
 	}
 
+	/**
+	 *Método para borrar un registro
+	 */
 	public void delete(T entity) {
 		em.getTransaction().begin();
 		try {
@@ -65,6 +85,9 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 
 	}
 
+	/**
+	 *Método para borrar un registro por su ID
+	 */
 	public void deleteByID(ID id) {
 		T entity = this.getById(id);
 		if (entity != null)
@@ -73,18 +96,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 	}
 
 	/**
-	 * @author carlos iniguez
-	 * @return Lista de Entidades basado en parametros
-	 * @see Pagina 28 y 29 de Diapositiva 4.- Persistencia.
-	 * @param attributes Lista (String) de campos sobre los cuales se va a realizar
-	 *                   la busqueda
-	 * @param values     Lista (String) de valores que pueden tomar los campos de
-	 *                   attributes
-	 * @param order      Nombre del Campo por el cual se realizará el ordenamiento.
-	 *                   Este siempre es Ascendente
-	 * @param index      Numero de indice de fila para presentar ( paginacion)
-	 * @param size       Numero de filas que se deben presentar (paginacion). Si
-	 *                   pones -1 o 0 no se tiene paginacion.
+	 * @author Cristian Verduga
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> get(String[] attributes, String[] values) {
@@ -112,18 +124,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 	}
 
 	/**
-	 * @author carlos iniguez
-	 * @return Lista de Usuarios basado en parametros y paginacion
-	 * @see Pagina 28 y 29 de Diapositiva 4.- Persistencia.
-	 * @param attributes Lista (String) de campos sobre los cuales se va a realizar
-	 *                   la busqueda
-	 * @param values     Lista (String) de valores que pueden tomar los campos de
-	 *                   attributes
-	 * @param order      Nombre del Campo por el cual se realizará el ordenamiento.
-	 *                   Este siempre es Ascendente
-	 * @param index      Numero de indice de fila para presentar ( paginacion)
-	 * @param size       Numero de filas que se deben presentar (paginacion). Si
-	 *                   pones -1 o 0 no se tiene paginacion.
+	 * @author Cristian Verduga
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> get(String[] attributes, String[] values, String order, int index, int size) {

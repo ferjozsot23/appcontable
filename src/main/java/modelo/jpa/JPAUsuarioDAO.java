@@ -3,12 +3,22 @@ package modelo.jpa;
 import modelo.dao.UsuarioDAO;
 import modelo.entidades.Usuario;
 
+/**Clase para manejar la persitencia de los datos del usuario que extiende métodos de la clase genérica
+ * @author Cristian
+ *
+ */
 public class JPAUsuarioDAO extends JPAGenericDAO<Usuario, Integer> implements UsuarioDAO{
 
+	/**
+	 *Cosntructor sin parámetros
+	 */
 	public JPAUsuarioDAO() {
 		super(Usuario.class);
 	}
 
+	/**
+	 *Método para autorizar a un usuario dentro de la aplicación según los registros de la base de datos
+	 */
 	@Override
 	public Usuario autorizar(String nombre, String clave) {
 		
